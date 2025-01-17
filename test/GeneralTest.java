@@ -7,7 +7,7 @@ import org.junit.Test;
 import actions.BuySoldierOrder;
 import army.Army;
 import army.General;
-import army.Soldier;
+import army.Private;
 
 public class GeneralTest {
     
@@ -47,7 +47,7 @@ public class GeneralTest {
     @Test
     public void testExecuteOrders() {
         General general = new General("John", 100, new Army());
-        BuySoldierOrder order = new BuySoldierOrder(general, new Soldier(1));
+        BuySoldierOrder order = new BuySoldierOrder(general, new Private());
         general.addOrder(order);
         
         general.executeOrders();
@@ -58,7 +58,7 @@ public class GeneralTest {
     @Test
     public void testAddOrder() {
         General general = new General("John", 100, new Army());
-        BuySoldierOrder order = new BuySoldierOrder(general, new Soldier(1));
+        BuySoldierOrder order = new BuySoldierOrder(general, new Private());
         general.addOrder(order);
         
         assertEquals(1, general.getOrders().size());
@@ -67,7 +67,7 @@ public class GeneralTest {
     @Test
     public void testRemoveOrder() {
         General general = new General("John", 100, new Army());
-        BuySoldierOrder order = new BuySoldierOrder(general, new Soldier(1));
+        BuySoldierOrder order = new BuySoldierOrder(general, new Private());
         general.addOrder(order);
         general.removeOrder(order);
         

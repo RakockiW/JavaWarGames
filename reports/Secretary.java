@@ -53,6 +53,7 @@ public class Secretary {
         for (String order : generalReports) {
             report += order + "\n";
         }
+
         return report.toString();
     }
 
@@ -77,7 +78,7 @@ public class Secretary {
     }
 
     
-    public String getRanksReport(Army army) {
+    public void getRanksReport(Army army) {
         int []ranksArmy = new int[4];
         
         for (Soldier soldier : army.getSoldiers()) {
@@ -87,18 +88,16 @@ public class Secretary {
         for (int i = 0; i < ranksArmy.length; i++) {
             reports.add("Stopień " + getRankName(i+1) + " w armii: " + ranksArmy[i] + "\n");
         }
-        return reports.toString();
     }
 
     public void generateReport() {
         reports.add("Raport dotyczący armii:\n");
         reports.add("Armia 1:\n  - Liczba żołnierzy: " + army1.getSoldiers().size() + "\n");
-        reports.add(getRanksReport(army1));
+        getRanksReport(army1);
         reports.add(getGeneralReport(general1));
         reports.add("Armia 2:\n  - Liczba żołnierzy: " + army2.getSoldiers().size() + "\n");
-        reports.add(getRanksReport(army2));
+        getRanksReport(army2);
         reports.add(getGeneralReport(general2));
-        addReport(reports.toString());
     }
 
     public List<String> getReports() {

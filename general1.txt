@@ -1,0 +1,6 @@
+Name: John
+Gold: 100
+Army: 
+  - 4 1
+  - 1 1
+  - 1 3

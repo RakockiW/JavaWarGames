@@ -39,7 +39,10 @@ public class AttackOrder implements Order{
         int armyAttackingStrength = armyAttacking.getStrength();
         int armyToAttackStrength = armyToAttack.getStrength();
         General winner, loser;
-
+        if (armyAttackingStrength == 0 ||  armyToAttackStrength == 0) {
+            return;
+        }
+        
         if (armyAttackingStrength > armyToAttackStrength) {
             
             winner = generalAttacking;

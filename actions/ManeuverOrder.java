@@ -25,7 +25,7 @@ public class ManeuverOrder implements Order {
                     return;
                 } else {
                     general.payGold(price);
-                    soldier.gainExperience(1);
+                    soldier = soldier.gainExperience(1);
             }
             }
         }

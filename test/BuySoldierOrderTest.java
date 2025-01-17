@@ -5,52 +5,45 @@ import org.junit.Test;
 import actions.BuySoldierOrder;
 import army.Army;
 import army.General;
-import army.Soldier;
+import army.Private;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuySoldierOrderTest {
     
     @Test
     public void testExecute() {
-        // Utwórz armię
         Army army = new Army();
         
-        // Utwórz generała z 100 monet
         General general = new General("John", 100, army);
         
-        // Utwórz polecenie kupna
-        BuySoldierOrder order = new BuySoldierOrder(general, new Soldier(1));
+        BuySoldierOrder order = new BuySoldierOrder(general, new Private());
         
-        // Wykonaj polecenie
         order.execute();
         
-        // Sprawdź, czy kasa generała została zmniejszona o koszt kupna
-        assertEquals(90, general.getGold());
+        assertAll(
+        () -> assertEquals(90, general.getGold()),
+        () -> assertEquals(1, army.getSoldiers().size())
+        );
         
-        // Sprawdź, czy armia została powiększona o 1 żołnierza
-        assertEquals(1, army.getSoldiers().size());
     }
     
     @Test
     public void testExecuteWithNoMoney() {
-        // Utwórz armię
         Army army = new Army();
         
-        // Utwórz generała bez monet
         General general = new General("John", 0, army);
         
-        // Utwórz polecenie kupna
-        BuySoldierOrder order = new BuySoldierOrder(general, new Soldier(1));
+        BuySoldierOrder order = new BuySoldierOrder(general, new Private());
         
-        // Wykonaj polecenie
         order.execute();
         
-        // Sprawdź, czy kasa generała nie została zmniejszona
-        assertEquals(0, general.getGold());
-        
-        // Sprawdź, czy armia nie została powiększona
-        assertEquals(0, army.getSoldiers().size());
+        assertAll(
+            () -> assertEquals(0, general.getGold()),
+            () -> assertEquals(0, army.getSoldiers().size())
+        );
     }
     
 }

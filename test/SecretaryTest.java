@@ -8,8 +8,11 @@ import actions.BuySoldierOrder;
 import static org.junit.Assert.*;
 import reports.Secretary;
 import army.Army;
+import army.Corporal;
 import army.General;
-import army.Soldier;
+import army.Private;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SecretaryTest {
@@ -19,14 +22,14 @@ public class SecretaryTest {
         Army army1 = new Army();
         Army army2 = new Army();
         
-        army1.addSoldier(new Soldier(1));
-        army1.addSoldier(new Soldier(2));
+        army1.addSoldier(new Private());
+        army1.addSoldier(new Corporal());
 
         General general1 = new General("John", 100, army1);
         General general2 = new General("Jack", 100, army2);
 
         ManeuverOrder order1 = new ManeuverOrder(general1, new int[] {1, 2});
-        BuySoldierOrder order2 = new BuySoldierOrder(general2, new Soldier(1));
+        BuySoldierOrder order2 = new BuySoldierOrder(general2, new Private());
         general1.addOrder(order1);
         general2.addOrder(order2);
 
@@ -34,39 +37,24 @@ public class SecretaryTest {
         secretary.generateReport();
         
         List<String> reports = secretary.getReports();
-        
-        assertTrue(reports.contains("Armia 1:\n  - Liczba żołnierzy: 2\n"));
-        assertTrue(reports.contains("Stopień Szeregowy w armii: 1\n"));
-        assertTrue(reports.contains("Stopień Kapral w armii: 1\n"));
-        assertTrue(reports.contains("Stopień Kapitan w armii: 0\n"));
-        assertTrue(reports.contains("Stopień Major w armii: 0\n"));
-        assertTrue(reports.contains("Generał John zarządza manewry!\n"));
 
-        assertTrue(reports.contains("Armia 2:\n  - Liczba żołnierzy: 0\n"));
-        assertTrue(reports.contains("Stopień Szeregowy w armii: 0\n"));
-        assertTrue(reports.contains("Stopień Kapral w armii: 0\n"));
-        assertTrue(reports.contains("Stopień Kapitan w armii: 0\n"));
-        assertTrue(reports.contains("Stopień Major w armii: 0\n"));
-        assertTrue(reports.contains("Generał Jack kupuje żołnierzy!\n"));
+        List<String> expectedReports = new ArrayList<String>();
+
+        expectedReports.add("Raport dotyczący armii:\n");
+        expectedReports.add("Armia 1:\n  - Liczba żołnierzy: 2\n");
+        expectedReports.add("Stopień Szeregowy w armii: 1\n");
+        expectedReports.add("Stopień Kapral w armii: 1\n");
+        expectedReports.add("Stopień Kapitan w armii: 0\n");
+        expectedReports.add("Stopień Major w armii: 0\n");
+        expectedReports.add("Generał John zarządza manewry!\n");
+        expectedReports.add("Armia 2:\n  - Liczba żołnierzy: 0\n");
+        expectedReports.add("Stopień Szeregowy w armii: 0\n");
+        expectedReports.add("Stopień Kapral w armii: 0\n");
+        expectedReports.add("Stopień Kapitan w armii: 0\n");
+        expectedReports.add("Stopień Major w armii: 0\n");
+        expectedReports.add("Generał Jack kupuje żołnierzy!\n");
+        
+        assertArrayEquals(expectedReports.toArray(), reports.toArray());
     }
-
-    @Test
-    public void testGetRanksReport() {
-        Army army1 = new Army();
-        Army army2 = new Army();
-        
-        army1.addSoldier(new Soldier(1));
-        army1.addSoldier(new Soldier(2));
-
-        General general1 = new General("John", 100, army1);
-        General general2 = new General("Jack", 100, army2);
-        
-        Secretary secretary = new Secretary(general1, general2);
-        String ranksReport = secretary.getRanksReport(army1);
-        
-        assertTrue(ranksReport.contains("Stopień Szeregowy w armii: 1\n"));
-        assertTrue(ranksReport.contains("Stopień Kapral w armii: 1\n"));
-    }
-
 
 }

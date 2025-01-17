@@ -2,7 +2,7 @@ package army;
 
 
 
-public class Soldier {
+public abstract class Soldier {
 
     private int rank;
     private int experience;
@@ -24,11 +24,14 @@ public class Soldier {
         return experience;
     }
 
-    public void gainExperience(int experience) {
+    public abstract Soldier nextRank();
+
+    public Soldier gainExperience(int experience) {
         this.experience += experience;
-        if (this.experience == this.rank * 5) {
-            this.promote();
+        if (this.experience == this.rank * 5 && this.rank < 4) {
+            return nextRank();
         }
+        return this;
     }
 
     public void loseExperience() {
